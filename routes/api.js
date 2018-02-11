@@ -63,6 +63,7 @@ router.get("/:resource/:id", (req, res, next) => {
 router.post("/:resource", utils.Auth.ensureLoggedIn, (req, res, next) => {
   var resource = req.params.resource;
   var formData = req.body;
+  console.log(formData);
   var controller = controllers[resource];
   if (controller == null) {
     res.json({

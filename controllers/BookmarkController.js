@@ -57,7 +57,11 @@ module.exports = {
               "og:image",
               "og:url"
             ]);
-            Bookmark.create(metaData, (err, bookmark) => {
+            var keys = Object.keys(metaData);
+            keys.forEach((key, i) => {
+              params[key] = metaData[key];
+            });
+            Bookmark.create(params, (err, bookmark) => {
               if (err) {
                 reject(err);
                 return;
