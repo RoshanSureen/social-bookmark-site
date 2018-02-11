@@ -1,3 +1,4 @@
 import profileReducer from "./profileReducer";
+import accountReducer from "./accountReducer";
 
-export { profileReducer };
+export { profileReducer, accountReducer };

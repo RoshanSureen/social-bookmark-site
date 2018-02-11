@@ -145,7 +145,7 @@ router.post("/:action", (req, res, next) => {
       .catch(err => {
         res.json({
           confirmation: "fail",
-          message: err
+          message: "No user is currenlty logged in"
         });
         return;
       });

@@ -11,6 +11,14 @@ export default {
           return;
         } else {
           callback(null, response.body);
+          // const confirmation = response.body.confirmation;
+          // if (confirmation != "success") {
+          //   callback({ message: response.body.message }, null);
+          //   return;
+          // } else {
+          //   callback(null, response.body);
+          //   return;
+          // }
         }
       });
   },
@@ -23,7 +31,14 @@ export default {
           callback(err, null);
           return;
         } else {
-          callback(null, response.body);
+          const confirmation = response.body.confirmation;
+          if (confirmation != "success") {
+            callback({ message: response.body.message }, null);
+            return;
+          } else {
+            callback(null, response.body);
+            return;
+          }
         }
       });
   }
