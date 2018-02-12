@@ -1,13 +1,14 @@
 import { combineReducers, applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
-import { profileReducer, accountReducer } from "../reducers";
+import { profileReducer, accountReducer, BookmarkReducer } from "../reducers";
 
 var store;
 export default {
   configureStore: () => {
     const reducers = combineReducers({
       profile: profileReducer,
-      account: accountReducer
+      account: accountReducer,
+      bookmark: BookmarkReducer
     });
     store = createStore(
       reducers,

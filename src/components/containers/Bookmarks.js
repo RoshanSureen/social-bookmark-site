@@ -1,22 +1,19 @@
 import React, { Component } from "react";
 import { APIManager } from "../../utils";
+import { connect } from "react-redux";
+import actions from "../../actions";
 
 class Bookmarks extends Component {
   constructor() {
     super();
-    this.state = {
-      bookmarks: []
-    };
+    this.state = {};
   }
   componentDidMount() {
     APIManager.get("/api/bookmark", null, (err, response) => {
       if (err) {
         return;
       } else {
-        console.log("Bookmarks: "+ JSON.stringify(response));
-        this.setState({
-          bookmarks: response.results
-        });
+        this.props.bookmarksReceived(response.results);
       }
     });
   }
@@ -25,17 +22,24 @@ class Bookmarks extends Component {
       <div>
         <h2>Bookmarks</h2>
         <ol>
-          {
-            this.state.bookmarks.map((bookmark, i) => {
-              return (
-                <li key={bookmark.id}>{bookmark.title}</li>
-              )
-            })
-          }
+          {this.props.bookmarks.map((bookmark, i) => {
+            return <li key={bookmark.id}>{bookmark.title}</li>;
+          })}
         </ol>
       </div>
     );
   }
 }
 
-export default Bookmarks
+const stateToProps = state => {
+  return {
+    bookmarks: state.bookmark.all
+  };
+};
+const dispatchToProps = dispatch => {
+  return {
+    bookmarksReceived: bookmarks =>
+      dispatch(actions.bookmarksReceived(bookmarks))
+  };
+};
+export default connect(stateToProps, dispatchToProps)(Bookmarks);
