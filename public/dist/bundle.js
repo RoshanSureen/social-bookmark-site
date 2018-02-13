@@ -562,6 +562,24 @@ module.exports = warning;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  PROFILES_RECEIVED: "PROFILES_RECEIVED",
+  PROFILE_CREATED: "PROFILE_CREATED",
+  CURRENT_USER_RECEIVED: "CURRENT_USER_RECEIVED",
+  BOOKMARKS_RECEIVED: "BOOKMARKS_RECEIVED",
+  PROFILE_SELECTED: "PROFILE_SELECTED"
+};
+
+/***/ }),
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -580,7 +598,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -596,7 +614,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(4);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(9);
+  var ReactPropTypesSecret = __webpack_require__(10);
   var loggedTypeFailures = {};
 }
 
@@ -647,7 +665,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -666,7 +684,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -686,7 +704,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.APIManager = _APIManager2.default;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -696,7 +714,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(7);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -726,24 +744,13 @@ exports.default = {
       type: _constants2.default.BOOKMARKS_RECEIVED,
       bookmarks: bookmarks
     };
+  },
+  profileSelected: function profileSelected(profile) {
+    return {
+      type: _constants2.default.PROFILE_SELECTED,
+      profile: profile
+    };
   }
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  PROFILES_RECEIVED: "PROFILES_RECEIVED",
-  PROFILE_CREATED: "PROFILE_CREATED",
-  CURRENT_USER_RECEIVED: "CURRENT_USER_RECEIVED",
-  BOOKMARKS_RECEIVED: "BOOKMARKS_RECEIVED"
 };
 
 /***/ }),
@@ -2059,7 +2066,7 @@ var _stores = __webpack_require__(88);
 
 var _stores2 = _interopRequireDefault(_stores);
 
-var _reactRedux = __webpack_require__(7);
+var _reactRedux = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2153,7 +2160,7 @@ var emptyObject = __webpack_require__(5);
 var invariant = __webpack_require__(4);
 var warning = __webpack_require__(6);
 var emptyFunction = __webpack_require__(2);
-var checkPropTypes = __webpack_require__(8);
+var checkPropTypes = __webpack_require__(9);
 
 // TODO: this is special because it gets imported during build.
 
@@ -3863,7 +3870,7 @@ var shallowEqual = __webpack_require__(18);
 var containsNode = __webpack_require__(19);
 var focusNode = __webpack_require__(20);
 var emptyObject = __webpack_require__(5);
-var checkPropTypes = __webpack_require__(8);
+var checkPropTypes = __webpack_require__(9);
 var hyphenateStyleName = __webpack_require__(41);
 var camelizeStyleName = __webpack_require__(43);
 
@@ -19520,13 +19527,13 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utils = __webpack_require__(10);
+var _utils = __webpack_require__(11);
 
-var _actions = __webpack_require__(11);
+var _actions = __webpack_require__(12);
 
 var _actions2 = _interopRequireDefault(_actions);
 
-var _reactRedux = __webpack_require__(7);
+var _reactRedux = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19561,6 +19568,13 @@ var Profiles = function (_Component) {
       });
     }
   }, {
+    key: "selectProfile",
+    value: function selectProfile(profile, event) {
+      event.preventDefault();
+      // console.log("Select Profile: "+JSON.stringify(profile));
+      this.props.profileSelected(profile);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -19570,13 +19584,13 @@ var Profiles = function (_Component) {
         if (_this3.props.selected == null) {
           name = _react2.default.createElement(
             "a",
-            { href: "#" },
+            { onClick: _this3.selectProfile.bind(_this3, profile), href: "#" },
             profile.firstName
           );
         } else if (_this3.props.selected.id == profile.id) {
           name = _react2.default.createElement(
             "a",
-            { href: "#" },
+            { onClick: _this3.selectProfile.bind(_this3, profile), href: "#" },
             _react2.default.createElement(
               "strong",
               { style: { color: "red" } },
@@ -19586,7 +19600,7 @@ var Profiles = function (_Component) {
         } else {
           name = _react2.default.createElement(
             "a",
-            { href: "#" },
+            { onClick: _this3.selectProfile.bind(_this3, profile), href: "#" },
             profile.firstName
           );
         }
@@ -19626,6 +19640,9 @@ var dispatchToProps = function dispatchToProps(dispatch) {
   return {
     profilesReceived: function profilesReceived(profiles) {
       return dispatch(_actions2.default.profilesReceived(profiles));
+    },
+    profileSelected: function profileSelected(profile) {
+      return dispatch(_actions2.default.profileSelected(profile));
     }
   };
 };
@@ -21832,8 +21849,8 @@ var invariant = __webpack_require__(4);
 var warning = __webpack_require__(6);
 var assign = __webpack_require__(3);
 
-var ReactPropTypesSecret = __webpack_require__(9);
-var checkPropTypes = __webpack_require__(8);
+var ReactPropTypesSecret = __webpack_require__(10);
+var checkPropTypes = __webpack_require__(9);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -22379,7 +22396,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 var emptyFunction = __webpack_require__(2);
 var invariant = __webpack_require__(4);
-var ReactPropTypesSecret = __webpack_require__(9);
+var ReactPropTypesSecret = __webpack_require__(10);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -23632,13 +23649,13 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(7);
+var _reactRedux = __webpack_require__(8);
 
-var _actions = __webpack_require__(11);
+var _actions = __webpack_require__(12);
 
 var _actions2 = _interopRequireDefault(_actions);
 
-var _utils = __webpack_require__(10);
+var _utils = __webpack_require__(11);
 
 var _presentation = __webpack_require__(84);
 
@@ -24050,11 +24067,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utils = __webpack_require__(10);
+var _utils = __webpack_require__(11);
 
-var _reactRedux = __webpack_require__(7);
+var _reactRedux = __webpack_require__(8);
 
-var _actions = __webpack_require__(11);
+var _actions = __webpack_require__(12);
 
 var _actions2 = _interopRequireDefault(_actions);
 
@@ -24241,7 +24258,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(7);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -24271,6 +24288,10 @@ exports.default = function () {
       updated["list"] = updatedList;
       return updated;
 
+    case _constants2.default.PROFILE_SELECTED:
+      updated["selected"] = action.profile;
+      return updated;
+
     default:
       return state;
   }
@@ -24287,7 +24308,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(7);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -24327,7 +24348,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(7);
 
 var _constants2 = _interopRequireDefault(_constants);
 

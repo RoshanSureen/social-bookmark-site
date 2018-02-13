@@ -157,54 +157,5 @@ router.post("/:action", (req, res, next) => {
     return;
   }
 });
-// router.post("/:action", (req, res, next) => {
-//   var action = req.params.action;
-//   var formData = req.body;
-//   if (action == "register") {
-//     controllers.profile
-//       .find({ email: formData.email })
-//       .then(profile => {
-//         res.json({
-//           confirmation: "fail",
-//           message: `User with email ${
-//             formData.email
-//           } already exists! Please Login`
-//         });
-//         return;
-//       })
-//       .catch(err => {
-//         controllers.profile
-//           .create(formData)
-//           .then(profile => {
-//             // create a signed JWT token
-//             var token = utils.JWT.sign(
-//               { id: profile.id },
-//               process.env.TOKEN_SECRET
-//             );
-//             // attach the token to the session
-//             req.session.token = token;
-//             res.json({
-//               confirmation: "success",
-//               profile,
-//               token
-//             });
-//             return;
-//           })
-//           .catch(err => {
-//             res.json({
-//               confirmation: "fail",
-//               message: "profile not created"
-//             });
-//             return;
-//           });
-//       });
-//   } else {
-//     res.json({
-//       confirmation: "fail",
-//       message: `${action} not supported`
-//     });
-//     return;
-//   }
-// });
 
 module.exports = router;

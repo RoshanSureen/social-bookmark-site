@@ -21,6 +21,10 @@ export default (state = initialState, action) => {
       updated["list"] = updatedList;
       return updated;
 
+    case constants.PROFILE_SELECTED:
+      updated["selected"] = action.profile;
+      return updated;
+
     default:
       return state;
   }

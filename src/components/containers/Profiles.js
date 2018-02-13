@@ -16,15 +16,20 @@ class Profiles extends Component {
       this.props.profilesReceived(results);
     });
   }
+  selectProfile(profile, event) {
+    event.preventDefault();
+    // console.log("Select Profile: "+JSON.stringify(profile));
+    this.props.profileSelected(profile);
+  }
   render() {
     const list = this.props.profiles.map((profile, i) => {
       let name = null;
       if (this.props.selected == null) {
-        name = <a href="#">{ profile.firstName }</a>
+        name = <a onClick={this.selectProfile.bind(this, profile)} href="#">{ profile.firstName }</a>
       } else if (this.props.selected.id == profile.id) {
-        name = <a href="#"><strong style={{color: "red"}}>{ profile.firstName }</strong></a>
+        name = <a onClick={this.selectProfile.bind(this, profile)} href="#"><strong style={{color: "red"}}>{ profile.firstName }</strong></a>
       } else {
-        name = <a href="#">{ profile.firstName }</a>
+        name = <a onClick={this.selectProfile.bind(this, profile)} href="#">{ profile.firstName }</a>
       }
       return <li key={profile.id}>{name}</li>;
     });
@@ -45,7 +50,8 @@ const stateToProps = state => {
 };
 const dispatchToProps = dispatch => {
   return {
-    profilesReceived: profiles => dispatch(actions.profilesReceived(profiles))
+    profilesReceived: profiles => dispatch(actions.profilesReceived(profiles)),
+    profileSelected: profile => dispatch(actions.profileSelected(profile))
   };
 }
 export default connect(stateToProps, dispatchToProps)(Profiles);
